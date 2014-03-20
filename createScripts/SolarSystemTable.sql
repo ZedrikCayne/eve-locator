@@ -1,0 +1,1 @@
+select solarSystemID,constellationID,regionID,security,solarSystemName from mapSolarSystems WHERE regionID < 11000000;
