@@ -1,0 +1,165 @@
+<head>
+  <title>Dude..where's my locator?</title>
+  <META name="description" content="Eve Online Locator Agent Finder">
+  <META name="keywords" content="eve, eve-online, EvE, agent, search, find, Zedrik Cayne, Zedrik">
+  <link href="main.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-21949366-1']);
+      _gaq.push(['_setDomainName', '.justaddhippopotamus.com']);
+      _gaq.push(['_trackPageview', '/locatorv2<?php echo $refString;?>']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <script type="text/javascript" src="AgentsTable.js"></script>
+    <script type="text/javascript" src="SolarSystemTable.js"></script>
+    <script type="text/javascript" src="agentFinder.js"></script>
+    <script type="text/javascript" src="jumpGenerator.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</head>
+<body onload="changeSystem();">
+  <H2>Find your locators</H2>
+  <p>
+    Are you tired of not being able to find your locator agents?
+  </p>
+  <p>
+    Enter your corporate standings below or use the API interface <a href="apiInterface.php">here</a>.
+    They go into the URL..once you have standings set bookmark the site. They will show up again later. You will get a list of the locators (level 3 and 4) that you can use.
+  </p>
+  <p>The list is ordered in distance from your current system location.</p>
+  <p>The 'locate' button starts a timer...when it hits 0 you will definitely have a locate available at that agent.</p>
+  <p>Now go and kill something with your new information!</p>
+  <p>Send isk to Zedrik Cayne if you like this.</p>
+  <script type="text/javascript">
+    <!--
+google_ad_client = "pub-6316860724246582";
+/* Locates Header */
+google_ad_slot = "3623201956";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+  </script>
+  <script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  </script>
+
+  <p>
+    <input type='button' onClick='getIGBPermission()' value='TRUST'>Apply for the Ingame Board Trust.</input>
+  </p>
+  <p>
+    Agents closest to <div id='SSName'></div>
+  </p>
+  <input type='text' value='' onChange='changeSystem()' name='system' id='system'/>
+  <input type='button' onClick='changeSystem()' value='Change System'/>
+  <select name='minLevel' id='minLevel' onchange='changeSystem()'>
+    <option value='1'>Level 1</option>
+    <option value='2'>Level 2</option>
+    <option value='3'>Level 3</option>
+    <option value='4'>Level 4</option>
+    <option value='5'>Level 5</option>
+  </select>
+  <input type='checkbox' onClick='changeSystem()'$checked value='highsecOnly' name='highsecOnly' id='highsecOnly'>Highsec Only</input>
+  <table>
+    <tr>
+      <div id="TableContainer">
+        Table Container...
+      </div>
+    </tr>
+    
+    <tr>
+      <td style="font-size: 10px; text-align: justify;">
+        COPYRIGHT NOTICE<br>
+          EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf. EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other trademarks are the property of their respective owners. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.<br>
+      </td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    
+    var timerStarted = false;
+    var lastSystem = "";
+    var lastHighsec = false;
+    var lastLevel = 0;
+
+    function changeSystem()
+    {
+      var currentStandingsString = gup( 'standings' );
+      var newLocation = document.getElementById( 'system' ).value;
+      var highsecOnly = document.getElementById( 'highsecOnly' ).checked;
+      var minLevel = document.getElementById( 'minLevel' ).value;
+
+      var extraStuff = '';
+      var moreStuff = '';
+      
+      if( timerStarted == false )
+      {
+        setInterval( changeSystem, 1000*15 );
+        timerStarted = true;
+      }
+      
+      var httpObject = new XMLHttpRequest();
+      
+      httpObject.open( "GET", "whatsystem.php?location="+newLocation, true );
+      httpObject.onreadystatechange = function() { ajaxReceipt(httpObject); };
+      httpObject.send(null);
+
+      if( lastSystem != newLocation || lastHighsec != highsecOnly || lastLevel != minLevel )
+      {
+        buildPage( newLocation, highsecOnly, minLevel );
+        lastSystem = newLocation;
+        lastHighsec = highsecOnly;
+        lastLevel = minLevel;
+      }
+    }
+
+    function getIGBPermission()
+    {
+      CCPEVE.requestTrust( 'http://eve-locator.justaddhippopotamus.com/' );
+    }
+
+    function setCookie(cname,cvalue)
+    {
+      var expires = "expires=-1";
+      document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    var timerStarted = false;
+    var pings = 0;
+    var fours = 0;
+    var twohun = 0;
+    function ajaxReceipt(object)
+    {
+      if( object.readyState == 4 )
+      {
+        fours++;
+        if( object.status == 200 )
+        {
+          twohun++;
+          document.getElementById( 'system' ).value = object.responseText;
+        }
+      }
+    }
+    
+
+    function getCookie(cname)
+    {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) 
+      {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+      }
+      return "";
+    }
+    
+                                
+
+  </script>
+</body>
+

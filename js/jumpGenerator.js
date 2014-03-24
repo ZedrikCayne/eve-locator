@@ -17,7 +17,7 @@ function GetJumpTable( startingSystem )
 	max = jTable.length;
 	for( i = 0; i < max; ++i )
 	{
-    		var destination = jTable[ i ];
+    	var destination = jTable[ i ];
 		finalOutput[ destination ] = 1;
 		currentOuterRim.push( destination );
 	}
@@ -30,18 +30,18 @@ function GetJumpTable( startingSystem )
     
 		for( i = 0; i < max; ++i )
 		{
-      			aRim = currentOuterRim[ i ];
-      			var j;
-      			var jTable = solar_system_table[ aRim ][ ss_table_jumps ];
-      			var jMax = jTable.length;
+      		aRim = currentOuterRim[ i ];
+      		var j;
+      		var jTable = solar_system_table[ aRim ][ ss_table_jumps ];
+      		var jMax = jTable.length;
 			for( j = 0; j < jMax; ++j )
 			{
-        			var destination = jTable[ j ];
-        			if( finalOutput[destination] == undefined )
-        			{
+        		var destination = jTable[ j ];
+        		if( finalOutput[destination] == undefined )
+        		{
 					finalOutput[ destination ] = currentDistance;
 					newOuterRim.push(destination);
-        			}
+        		}
 			}
 		}
 		currentDistance++;
