@@ -36,6 +36,7 @@
   <p>The 'locate' button starts a timer...when it hits 0 you will definitely have a locate available at that agent.</p>
   <p>Now go and kill something with your new information!</p>
   <p>Send isk to Zedrik Cayne if you like this.</p>
+  <div id="cookieee"></div>
   <script type="text/javascript">
     <!--
 google_ad_client = "pub-6316860724246582";
@@ -125,13 +126,34 @@ google_ad_height = 90;
     function setCookie(cname,cvalue)
     {
       var expires = "expires=-1";
-      document.cookie = cname + "=" + cvalue + "; " + expires;
+      //document.cookie = cname + "=" + cvalue + "; " + expires;
+      document.cookie = cname + "=" + cvalue;
+      document.getElementById('cookieee').innerHTML = document.cookie;
+      document.getElementById('cookieee').innerHTML = cname + "=" + cvalue + "; " + expires;
     }
 
     var timerStarted = false;
     var pings = 0;
     var fours = 0;
     var twohun = 0;
+    
+    function setCookie(cookieName,cookieValue) {
+      var nDays = 30;
+      var today = new Date();
+      var expire = new Date();
+      expire.setTime(today.getTime() + 3600000*24*nDays);
+      document.cookie = cookieName+"="+escape(cookieValue) + ";expires="+expire.toGMTString();
+    }
+
+    function getCookie(cookieName) {
+      var theCookie=""+document.cookie;
+      var ind=theCookie.indexOf(cookieName);
+      if (ind==-1 || cookieName=="") return "";
+      var ind1=theCookie.indexOf(';',ind);
+      if (ind1==-1) ind1=theCookie.length;
+      return unescape(theCookie.substring(ind+cookieName.length+1,ind1));
+    }
+    
     function ajaxReceipt(object)
     {
       if( object.readyState == 4 )
@@ -146,18 +168,6 @@ google_ad_height = 90;
     }
     
 
-    function getCookie(cname)
-    {
-      var name = cname + "=";
-      var ca = document.cookie.split(';');
-      for(var i=0; i<ca.length; i++) 
-      {
-        var c = ca[i].trim();
-        if (c.indexOf(name)==0) return c.substring(name.length,c.length);
-      }
-      return "";
-    }
-    
                                 
 
   </script>

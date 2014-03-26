@@ -25,6 +25,8 @@ function startTiming(whichThing,level)
   var currentMS = currentDate.getTime();
   var targetMS = currentMS;
 
+
+
   var l1Minutes = 5+1;
   var l2Minutes = 8+5;
   var l3Minutes = 15+8;
@@ -39,7 +41,6 @@ function startTiming(whichThing,level)
   else if( level == 5 ) targetMS += l5Minutes * 60 * 1000;
   else return;
   
-  
   startThis(whichThing, targetMS);
 }
 
@@ -53,6 +54,16 @@ function startThis(myThing, myMS)
 	  locateText.style.display = 'inline';
 	  locateText.innerHTML = '';
   }
+
+  for( aKey in pageData )
+  {
+	if( pageData[ aKey ][ 0 ] == myThing )
+	{
+		pageData[ aKey ][ 1 ] = myMS;
+		return;
+	}
+  }
+
   pageData.push( [myThing, myMS] );
 }
 
@@ -69,8 +80,11 @@ function updatePage()
       //Turn it off
       var locateButton = document.getElementById('locate-button-'+myStuff[0]);
       var locateText = document.getElementById('locate-time-'+myStuff[0]);
-      locateButton.style.display = 'inline';
-      locateText.style.display = 'none';
+	  if( locateButton != null && locateText != null )
+	  {
+		  locateButton.style.display = 'inline';
+		  locateText.style.display = 'none';
+	  }
       removeStuff.unshift( aKey );
     }
     else
