@@ -149,6 +149,30 @@ function buildPage(solarSystem,highsecOnly,minLevel)
     pageStandings[parseInt( stringThing[0] )] = parseFloat( stringThing[1] );
   }
 
+  var newInnerHTML = "<table border='1'>\
+    <tr>\
+      <th>DELETE</th>\
+      <th>Corporation/Faction</th>\
+      <th>Standing</th>\
+    </tr>";
+
+
+  for( aKey in pageStandings )
+  {
+    var corpName = corp_table[ aKey ];
+    newInnerHTML += "<tr>\
+      <td>\
+        <input type='button' value='DELETE' onClick='ditchStanding("+aKey+")'/>\
+      </td>\
+      <td>"+corpName+"</td>\
+      <td>"+pageStandings[aKey]+"</td>\
+    </tr>"
+  }
+  newInnerHTML += "</table>";
+  
+  var standingsNub = document.getElementById('StandingsContainer');
+  standingsNub.innerHTML = newInnerHTML;
+
   document.getElementById( 'system' ).value = solarSystem;
   
   var newInnerHTML = "\
