@@ -67,6 +67,7 @@ function startThis(myThing, myMS)
   pageData.push( [myThing, myMS] );
 }
 
+
 function updatePage()
 {
   var dateNow = new Date();
@@ -104,7 +105,7 @@ function updatePage()
 		  if( secs < 10 ) secString += "0";
 		  secString += secs;
       
-		  locateText.innerHTML = "LEFT: "+minString+":"+secString;
+		  locateText.innerHTML = "<a href='javascript:void(0)' onClick='startThis("+myStuff[0]+",0)'>LEFT: "+minString+":"+secString+"</a>";
 	  }
     }
 
