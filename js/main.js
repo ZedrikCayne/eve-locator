@@ -1,7 +1,7 @@
 function gup( name )
 {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regexS = "[\\?&#]"+name+"=([^&#]*)";
   var regex = new RegExp( regexS );
   var results = regex.exec( window.location.href );
   if( results == null )
@@ -30,7 +30,7 @@ function startTiming(whichThing,level)
   var l1Minutes = 5+1;
   var l2Minutes = 8+5;
   var l3Minutes = 15+8;
-  var l4Minutes = 26+4;
+  var l4Minutes = 30+4;
   //var l3Minutes = 0.5;
   //var l4Minutes = 1;
   
@@ -38,7 +38,7 @@ function startTiming(whichThing,level)
   else if( level == 4 ) targetMS += l4Minutes * 60 * 1000;
   else if( level == 2 ) targetMS += l2Minutes * 60 * 1000;
   else if( level == 1 ) targetMS += l1Minutes * 60 * 1000;
-  else if( level == 5 ) targetMS += l5Minutes * 60 * 1000;
+  else if( level == 5 ) targetMS += l4Minutes * 60 * 1000;
   else return;
   
   startThis(whichThing, targetMS);
@@ -137,22 +137,15 @@ function updatePage()
 
 var pageStandings = {};
 
+function setPageStandings( standingsObject) {
+  pageStandings = standingsObject;
+}
+
 function buildPage(solarSystem,highsecOnly,minLevel)
 {
-  var standingsString = gup( 'standings' );
-  var splitStandings = standingsString.split( "," );
-  pageStandings = {};
-  var i;
-  var len = splitStandings.length;
-  for( i = 0; i < len; ++i )
-  {
-    var stringThing = splitStandings[ i ].split( ":" );
-    pageStandings[parseInt( stringThing[0] )] = parseFloat( stringThing[1] );
-  }
-
+  
   var newInnerHTML = "<table border='1'>\
     <tr>\
-      <th>DELETE</th>\
       <th>Corporation/Faction</th>\
       <th>Standing</th>\
     </tr>";
@@ -162,9 +155,6 @@ function buildPage(solarSystem,highsecOnly,minLevel)
   {
     var corpName = corp_table[ aKey ];
     newInnerHTML += "<tr>\
-      <td>\
-        <input type='button' value='DELETE' onClick='ditchStanding("+aKey+")'/>\
-      </td>\
       <td>"+corpName+"</td>\
       <td>"+pageStandings[aKey]+"</td>\
     </tr>"
@@ -213,7 +203,7 @@ function buildPage(solarSystem,highsecOnly,minLevel)
       <td>"+stationName+"</td>\
       <td>"+jumps+"</td>\
       <td>\
-        <input type='button' value='SET' onClick='CCPEVE.setDestination("+stationId+")' />\
+        <input type='button' value='SET' onClick='setDestination( " + solarSystem + "," + stationId + ")' />\
       </td>\
       <td>\
         <div id='locate-button-"+agentId+"'>\
