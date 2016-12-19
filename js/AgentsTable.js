@@ -1326,7 +1326,6 @@ agent_table = [
 [ 3013445 , 3, 1000054, 500002, 60005077, 30002517, "Oserin Suldren", "Gulmorogod VIII - Moon 15 - Republic Security Services Testing Facilities" ], 
 [ 3013447 , 1, 1000054, 500002, 60005116, 30002087, "Odauden Hitukur", "Isbrabata VIII - Moon 5 - Republic Security Services Assembly Plant" ], 
 [ 3013451 , 4, 1000055, 500002, 60005386, 30003416, "Steddil Audorgeir", "Aldrat VII - Moon 7 - Minmatar Mining Corporation Mineral Reserve" ], 
-[ 3013461 , 4, 1000057, 500002, 60005701, 30002055, "Heidirdria Bord", "Amo V - Moon 20 - Boundless Creation Factory" ], 
 [ 3013468 , 4, 1000059, 500002, 60005740, 30002546, "Forrilur Sastrentad", "Isendeldik VIII - Moon 19 - Six Kin Development Warehouse" ], 
 [ 3013469 , 3, 1000060, 500002, 60005767, 30002384, "Orudhold Sidreke", "Gulfonodi X - Moon 13 - Native Freshfood Plantation" ], 
 [ 3013470 , 2, 1000060, 500002, 60005764, 30002384, "Ilsdald Manban", "Gulfonodi VIII - Moon 6 - Native Freshfood Plantation" ], 
